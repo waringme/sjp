@@ -1,0 +1,35 @@
+{
+    "asset_allocation": [
+      {
+        "asset_class": "Equities",
+        "allocation_percentage": 55,
+        "value": 275000,
+        "trend": "Positive"
+      },
+      {
+        "asset_class": "Fixed Income",
+        "allocation_percentage": 25,
+        "value": 125000,
+        "trend": "Stable"
+      },
+      {
+        "asset_class": "Real Estate",
+        "allocation_percentage": 10,
+        "value": 50000,
+        "trend": "Growth"
+      },
+      {
+        "asset_class": "Alternatives",
+        "allocation_percentage": 5,
+        "value": 25000,
+        "trend": "Neutral"
+      },
+      {
+        "asset_class": "Cash",
+        "allocation_percentage": 5,
+        "value": 25000,
+        "trend": "Slight Decline"
+      }
+    ]
+  }
+  
