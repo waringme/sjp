@@ -15,6 +15,123 @@ function formatCurrency(value) {
 }
 
 /**
+ * Color palette for pie chart
+ */
+const CHART_COLORS = [
+  '#3b82f6', // Blue
+  '#10b981', // Green
+  '#f59e0b', // Amber
+  '#8b5cf6', // Purple
+  '#ef4444', // Red
+  '#06b6d4', // Cyan
+  '#ec4899', // Pink
+  '#84cc16', // Lime
+];
+
+/**
+ * Draw pie chart on canvas with animation
+ */
+function drawPieChart(canvas, data) {
+  const ctx = canvas.getContext('2d');
+  const centerX = canvas.width / 2;
+  const centerY = canvas.height / 2;
+  const radius = Math.min(centerX, centerY) - 10;
+  
+  let currentAngle = -Math.PI / 2; // Start at top
+  let animationProgress = 0;
+  const animationDuration = 1500; // 1.5 seconds total
+  const sliceDelay = 150; // Delay between each slice
+  
+  // Clear canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  // Calculate slice data
+  const slices = data.map((asset, index) => {
+    const sliceAngle = (asset.allocation_percentage / 100) * 2 * Math.PI;
+    const slice = {
+      startAngle: currentAngle,
+      endAngle: currentAngle + sliceAngle,
+      color: CHART_COLORS[index % CHART_COLORS.length],
+      index: index,
+    };
+    currentAngle += sliceAngle;
+    return slice;
+  });
+  
+  // Animation function
+  function animate(timestamp) {
+    if (!animationProgress) animationProgress = timestamp;
+    const elapsed = timestamp - animationProgress;
+    
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Draw each slice with fade-in
+    slices.forEach((slice, index) => {
+      const sliceStartTime = index * sliceDelay;
+      const sliceElapsed = Math.max(0, elapsed - sliceStartTime);
+      const sliceProgress = Math.min(sliceElapsed / 800, 1); // 800ms per slice
+      
+      if (sliceProgress > 0) {
+        // Calculate opacity (fade in)
+        const opacity = sliceProgress;
+        
+        // Draw slice
+        ctx.save();
+        ctx.globalAlpha = opacity;
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, radius, slice.startAngle, slice.endAngle);
+        ctx.lineTo(centerX, centerY);
+        ctx.fillStyle = slice.color;
+        ctx.fill();
+        
+        // Draw slice border
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.restore();
+      }
+    });
+    
+    // Continue animation if not complete
+    if (elapsed < animationDuration) {
+      requestAnimationFrame(animate);
+    } else {
+      // Final draw at full opacity
+      ctx.globalAlpha = 1;
+      // Add flash effect at end
+      canvas.classList.add('flash-animation');
+    }
+  }
+  
+  // Start animation
+  requestAnimationFrame(animate);
+}
+
+/**
+ * Create pie chart HTML
+ */
+function createPieChart(data) {
+  const assets = data.asset_allocation || [];
+  
+  const chartHTML = `
+    <div class="pie-chart-container">
+      <canvas id="allocation-pie-chart" width="300" height="300"></canvas>
+      <div class="chart-legend">
+        ${assets.map((asset, index) => `
+          <div class="legend-item">
+            <span class="legend-color" style="background-color: ${CHART_COLORS[index % CHART_COLORS.length]}"></span>
+            <span class="legend-label">${asset.asset_class}</span>
+            <span class="legend-value">${asset.allocation_percentage}%</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+  
+  return chartHTML;
+}
+
+/**
  * Create table HTML from asset allocation data
  */
 function renderTable(data) {
@@ -131,8 +248,20 @@ export default async function decorate(block) {
       return;
     }
     
-    // Render the table
-    block.innerHTML = renderTable(assetData);
+    // Render the visualization
+    const visualizationHTML = `
+      <div class="asset-allocation-wrapper">
+        ${createPieChart(assetData)}
+        ${renderTable(assetData)}
+      </div>
+    `;
+    block.innerHTML = visualizationHTML;
+    
+    // Draw the pie chart after DOM is updated
+    const canvas = block.querySelector('#allocation-pie-chart');
+    if (canvas) {
+      drawPieChart(canvas, assetData.asset_allocation);
+    }
     
   } catch (error) {
     console.error('Error rendering asset allocation:', {
