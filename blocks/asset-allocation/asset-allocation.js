@@ -39,8 +39,8 @@ function drawPieChart(canvas, data) {
   
   let currentAngle = -Math.PI / 2; // Start at top
   let animationProgress = 0;
-  const animationDuration = 1500; // 1.5 seconds total
-  const sliceDelay = 150; // Delay between each slice
+  const animationDuration = 3000; // 3 seconds total
+  const sliceDelay = 300; // Delay between each slice
   
   // Clear canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -69,7 +69,7 @@ function drawPieChart(canvas, data) {
     slices.forEach((slice, index) => {
       const sliceStartTime = index * sliceDelay;
       const sliceElapsed = Math.max(0, elapsed - sliceStartTime);
-      const sliceProgress = Math.min(sliceElapsed / 800, 1); // 800ms per slice
+      const sliceProgress = Math.min(sliceElapsed / 1200, 1); // 1200ms per slice
       
       if (sliceProgress > 0) {
         // Calculate opacity (fade in)
