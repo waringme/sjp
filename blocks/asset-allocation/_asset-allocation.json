@@ -23,10 +23,10 @@
         {
           "component": "text",
           "name": "endpoint",
-          "label": "API Endpoint Path",
+          "label": "API Endpoint URL",
           "value": "/asset-allocation.json",
           "valueType": "string",
-          "description": "Path to the JSON endpoint (e.g., /asset-allocation.json)"
+          "description": "Relative path (e.g., /asset-allocation.json) or full URL to the JSON endpoint"
         }
       ]
     }

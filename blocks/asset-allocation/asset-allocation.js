@@ -67,7 +67,6 @@ function renderTable(data) {
 export default async function decorate(block) {
   // Configuration
   const CONFIG = {
-    WRAPPER_SERVICE_URL: 'https://3635370-refdemoapigateway-stage.adobeioruntime.net/api/v1/web/ref-demo-api-gateway/fetch-json',
     DEFAULT_ENDPOINT: '/asset-allocation.json'
   };
   
@@ -77,24 +76,32 @@ export default async function decorate(block) {
   // Clear block content
   block.innerHTML = '';
   
-  const hostnameFromPlaceholders = await getHostname();
-  const hostname = hostnameFromPlaceholders ? hostnameFromPlaceholders : getMetadata('hostname');
-  const aemauthorurl = getMetadata('authorurl') || '';
-  const aempublishurl = hostname?.replace('author', 'publish')?.replace(/\/$/, '');
   const isAuthor = isAuthorEnvironment();
   
   // Prepare request configuration based on environment
-  const requestConfig = isAuthor 
-    ? {
-        url: `${aemauthorurl}${endpointPath}?ts=${Date.now()}`,
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
-      }
-    : {
-        url: `${aempublishurl}${endpointPath}?ts=${Date.now()}`,
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
-      };
+  let apiUrl;
+  
+  // Check if endpointPath is a full URL or a relative path
+  const isFullUrl = endpointPath.startsWith('http://') || endpointPath.startsWith('https://');
+  
+  if (isFullUrl) {
+    // Use the full URL as provided
+    apiUrl = `${endpointPath}?ts=${Date.now()}`;
+  } else if (isAuthor) {
+    // In author mode, prepend AEM author URL
+    const aemauthorurl = getMetadata('authorurl') || '';
+    apiUrl = `${aemauthorurl}${endpointPath}?ts=${Date.now()}`;
+  } else {
+    // For published/preview environment with relative path, use current origin
+    const baseUrl = window.location.origin;
+    apiUrl = `${baseUrl}${endpointPath}?ts=${Date.now()}`;
+  }
+  
+  const requestConfig = {
+    url: apiUrl,
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' }
+  };
   
   try {
     // Fetch data
