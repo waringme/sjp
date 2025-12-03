@@ -1,0 +1,152 @@
+.asset-allocation-container {
+  width: 100%;
+  overflow-x: auto;
+  padding: 20px 0;
+}
+
+.asset-allocation-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--body-font-family);
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.asset-allocation-table thead {
+  background: var(--color-primary, #2c5f7e);
+  color: white;
+}
+
+.asset-allocation-table th {
+  padding: 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.asset-allocation-table tbody tr {
+  border-bottom: 1px solid #e5e7eb;
+  transition: background-color 0.2s ease;
+}
+
+.asset-allocation-table tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+.asset-allocation-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.asset-allocation-table td {
+  padding: 16px;
+  font-size: 14px;
+  color: #374151;
+}
+
+.asset-allocation-table td.asset-class {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.asset-allocation-table td.value {
+  font-weight: 500;
+  color: #059669;
+}
+
+/* Percentage bar styling */
+.percentage-bar-container {
+  position: relative;
+  width: 100%;
+  max-width: 200px;
+  height: 24px;
+  background: #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.percentage-bar {
+  position: absolute;
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  border-radius: 12px;
+  transition: width 0.6s ease;
+}
+
+.percentage-text {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  line-height: 24px;
+  font-weight: 600;
+  font-size: 12px;
+  color: #1f2937;
+  z-index: 1;
+}
+
+/* Trend styling */
+.asset-allocation-table td.trend {
+  font-weight: 500;
+  padding: 4px 12px;
+  border-radius: 16px;
+  display: inline-block;
+  font-size: 12px;
+}
+
+.asset-allocation-table td.trend.positive {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.asset-allocation-table td.trend.stable {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.asset-allocation-table td.trend.growth {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.asset-allocation-table td.trend.neutral {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+.asset-allocation-table td.trend.slight-decline {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+/* Error message styling */
+.asset-allocation-container .error {
+  padding: 20px;
+  background: #fee2e2;
+  color: #991b1b;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .asset-allocation-table {
+    font-size: 12px;
+  }
+  
+  .asset-allocation-table th,
+  .asset-allocation-table td {
+    padding: 12px 8px;
+  }
+  
+  .percentage-bar-container {
+    max-width: 120px;
+  }
+  
+  .percentage-text {
+    font-size: 10px;
+  }
+}
+

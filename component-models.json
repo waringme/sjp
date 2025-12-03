@@ -6374,6 +6374,19 @@
     ]
   },
   {
+    "id": "asset-allocation",
+    "fields": [
+      {
+        "component": "text",
+        "name": "endpoint",
+        "label": "API Endpoint Path",
+        "value": "/asset-allocation.json",
+        "valueType": "string",
+        "description": "Path to the JSON endpoint (e.g., /asset-allocation.json)"
+      }
+    ]
+  },
+  {
     "id": "accordion",
     "fields": [
       {
