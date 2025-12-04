@@ -211,7 +211,7 @@ function createDoctorCard(doctor) {
   const cardContent = `
     <div class="doctor-image">
       <img src="${doctor.image}" alt="${doctor.name}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMCIgZmlsbD0iI2YzZjRmNiIvPgo8cGF0aCBkPSJNMTIgMTJhNCA0IDAgMSAwIDAtOCA0IDQgMCAwIDAgMCA4WiIgZmlsbD0iIzk5YTNhZiIvPgo8cGF0aCBkPSJNMTIgMTRjLTMuMzEzIDAtNiAyLjY4Ny02IDZ2MmgxMnYtMmMwLTMuMzEzLTIuNjg3LTYtNi02WiIgZmlsbD0iIzk5YTNhZiIvPgo8L3N2Zz4K'">
-      ${doctor.acceptingNewPatients ? '<span class="accepting-patients">Accepting New Patients</span>' : '<span class="not-accepting">Not Accepting New Patients</span>'}
+      ${doctor.acceptingNewPatients ? '<span class="accepting-patients">Accepting New Clients</span>' : '<span class="not-accepting">Not Accepting New Patients</span>'}
     </div>
     <div class="doctor-info">
       <h3 class="doctor-name">${doctor.name}</h3>
@@ -280,7 +280,7 @@ function renderResults(doctors, container) {
       <svg width="64" height="64" viewBox="0 0 24 24" fill="currentColor">
         <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
       </svg>
-      <h3>No doctors found</h3>
+      <h3>No advisers found</h3>
       <p>Try adjusting your search criteria or location.</p>
     `;
     container.appendChild(noResults);
@@ -485,9 +485,12 @@ function toTitleCase(text) {
 
 function extractTagLabel(tagId) {
   // Example: "healthcare:department/cardiology" -> "Cardiology"
+  // or "Sjp:Something" -> "Something"
   if (!tagId || typeof tagId !== 'string') return '';
   const last = tagId.split('/').pop();
-  return toTitleCase(last);
+  // Remove any prefix before the first colon (e.g., "Sjp:Something" -> "Something")
+  const withoutPrefix = last.includes(':') ? last.split(':').pop() : last;
+  return toTitleCase(withoutPrefix);
 }
 
 function transformGraphQLDoctorItem(item, isAuthorEnv) {
@@ -614,7 +617,7 @@ function createSearchForm(config, doctors = []) {
   if (config.enableProviderNameSearch !== false) {
     const nameGroup = createElement('div', 'search-group');
     const nameLabel = createElement('label', '', 'Search by Provider Name');
-    const nameInput = createSearchInput('Enter doctor\'s name...', 'provider-name-search');
+    const nameInput = createSearchInput('Enter Adviser\'s name...', 'provider-name-search');
     nameGroup.appendChild(nameLabel);
     nameGroup.appendChild(nameInput);
     searchRow.appendChild(nameGroup);
@@ -637,7 +640,7 @@ function createSearchForm(config, doctors = []) {
     const locationGroup = createElement('div', 'search-group');
     const locationLabel = createElement('label', '', 'Location');
     const subLocation = createElement('div', 'sub-location');
-    const locationInput = createSearchInput('City, State, or ZIP code...', 'location-search');
+    const locationInput = createSearchInput('City, Post code...', 'location-search');
     const locationButton = createElement('button', 'location-button', '📍');
     locationButton.title = 'my location';
     locationButton.setAttribute('aria-label', 'my location');
@@ -667,8 +670,8 @@ export default async function decorate(block) {
   }
   
   // Read configuration using key-based approach (works with Universal Editor)
-  let title = 'Find a Doctor';
-  let subtitle = 'Search for healthcare providers in your area';
+  let title = 'Find a Adviser';
+  let subtitle = 'Search for financial advisers in your area';
   let layout = 'default';
   let dataSourceType = 'content-fragments';
   let contentFragmentFolder = '';
