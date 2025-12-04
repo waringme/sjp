@@ -228,9 +228,6 @@ function createDoctorCard(doctor) {
         ${doctor.location}
       </p>
       <p class="doctor-hospital">${doctor.hospital}</p>
-      <div class="doctor-languages">
-        <strong>Languages:</strong> ${doctor.languages.join(', ')}
-      </div>
       <div class="doctor-contact">
         <a href="tel:${doctor.phone}" class="contact-phone">${doctor.phone}</a>
         <a href="mailto:${doctor.email}" class="contact-email">Contact</a>
