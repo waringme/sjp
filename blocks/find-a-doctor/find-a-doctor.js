@@ -214,6 +214,7 @@ function createDoctorCard(doctor) {
       ${doctor.acceptingNewPatients ? '<span class="accepting-patients">Accepting New Clients</span>' : '<span class="not-accepting">Not Accepting New Patients</span>'}
     </div>
     <div class="doctor-info">
+      <h3 class="doctor-name">${doctor.name}</h3>
       <p class="doctor-specialty">${doctor.specialty}</p>
       <p class="doctor-experience">${doctor.experience} experience</p>
       <div class="doctor-rating">
@@ -227,6 +228,9 @@ function createDoctorCard(doctor) {
         ${doctor.location}
       </p>
       <p class="doctor-hospital">${doctor.hospital}</p>
+      <div class="doctor-languages">
+        <strong>Languages:</strong> ${doctor.languages.join(', ')}
+      </div>
       <div class="doctor-contact">
         <a href="tel:${doctor.phone}" class="contact-phone">${doctor.phone}</a>
         <a href="mailto:${doctor.email}" class="contact-email">Contact</a>
@@ -461,8 +465,17 @@ async function fetchFromContentFragmentFolder(folderPath) {
       throw parseError;
     }
 
-    const items = payload?.data?.adviserProfileList?.items || [];
-    console.log('ssssss');
+    console.log('=== FULL GRAPHQL RESPONSE ===');
+    console.log('Full payload:', JSON.stringify(payload, null, 2));
+    console.log('payload.data:', payload?.data);
+    console.log('Available keys in payload.data:', payload?.data ? Object.keys(payload.data) : 'no data');
+    
+    // Try different possible response structures
+    let items = payload?.data?.adviserProfileList?.items || 
+                payload?.data?.doctorProfile_healthcare_List?.items ||
+                payload?.adviserProfileList?.items ||
+                payload?.items ||
+                [];
     console.log('GraphQL items received:', items?.length || 0);
 
     const doctors = items.map((item) => transformGraphQLDoctorItem(item, isAuthor));
@@ -667,7 +680,7 @@ export default async function decorate(block) {
   }
   
   // Read configuration using key-based approach (works with Universal Editor)
-  let title = 'Find a Adviser';
+  let title = 'Find an Adviser';
   let subtitle = 'Search for financial advisers in your area';
   let layout = 'default';
   let dataSourceType = 'content-fragments';
