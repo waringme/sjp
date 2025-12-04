@@ -214,7 +214,6 @@ function createDoctorCard(doctor) {
       ${doctor.acceptingNewPatients ? '<span class="accepting-patients">Accepting New Clients</span>' : '<span class="not-accepting">Not Accepting New Patients</span>'}
     </div>
     <div class="doctor-info">
-      <h3 class="doctor-name">${doctor.name}</h3>
       <p class="doctor-specialty">${doctor.specialty}</p>
       <p class="doctor-experience">${doctor.experience} experience</p>
       <div class="doctor-rating">
@@ -228,9 +227,6 @@ function createDoctorCard(doctor) {
         ${doctor.location}
       </p>
       <p class="doctor-hospital">${doctor.hospital}</p>
-      <div class="doctor-languages">
-        <strong>Languages:</strong> ${doctor.languages.join(', ')}
-      </div>
       <div class="doctor-contact">
         <a href="tel:${doctor.phone}" class="contact-phone">${doctor.phone}</a>
         <a href="mailto:${doctor.email}" class="contact-email">Contact</a>
