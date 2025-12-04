@@ -462,6 +462,7 @@ async function fetchFromContentFragmentFolder(folderPath) {
     }
 
     const items = payload?.data?.adviserProfileList?.items || [];
+    console.log('ssssss');
     console.log('GraphQL items received:', items?.length || 0);
 
     const doctors = items.map((item) => transformGraphQLDoctorItem(item, isAuthor));
