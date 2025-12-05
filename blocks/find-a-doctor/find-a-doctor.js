@@ -214,28 +214,33 @@ function createDoctorCard(doctor) {
       ${doctor.acceptingNewPatients ? '<span class="accepting-patients">Accepting New Clients</span>' : '<span class="not-accepting">Not Accepting New Patients</span>'}
     </div>
     <div class="doctor-info">
-      <h3 class="doctor-name">${doctor.name}</h3>
-      <p class="doctor-specialty">${doctor.specialty}</p>
-      <p class="doctor-experience">${doctor.experience} experience</p>
-      <div class="doctor-rating">
-        <span class="rating-stars">${'★'.repeat(Math.floor(doctor.rating))}${'☆'.repeat(5 - Math.floor(doctor.rating))}</span>
-        <span class="rating-number">${doctor.rating}</span>
+      <div class="doctor-header">
+        <h3 class="doctor-name">${doctor.name}</h3>
+        <p class="doctor-hospital">${doctor.hospital}</p>
       </div>
-      <p class="doctor-location">
-        <svg class="location-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-        </svg>
-        ${doctor.location}
-      </p>
-      <p class="doctor-hospital">${doctor.hospital}</p>
-      <div class="doctor-contact">
-        <a href="tel:${doctor.phone}" class="contact-phone">${doctor.phone}</a>
-        <a href="mailto:${doctor.email}" class="contact-email">Contact</a>
+      <div class="doctor-description">
+        <p class="doctor-specialty">${doctor.specialty}</p>
+        <p class="doctor-experience">${doctor.experience} experience</p>
+        <div class="doctor-rating">
+          <span class="rating-stars">${'★'.repeat(Math.floor(doctor.rating))}${'☆'.repeat(5 - Math.floor(doctor.rating))}</span>
+          <span class="rating-number">${doctor.rating}</span>
+        </div>
+        <p class="doctor-location">
+          <svg class="location-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          </svg>
+          ${doctor.location}
+        </p>
       </div>
-      <button class="book-appointment-btn" data-doctor-id="${doctor.id}" data-appointment-url="${doctor.bookAppointmentUrl || ''}">
-        Book Appointment
-      </button>
-  
+      <div class="doctor-actions">
+        <div class="doctor-contact">
+          <a href="tel:${doctor.phone}" class="contact-phone">${doctor.phone}</a>
+          <a href="mailto:${doctor.email}" class="contact-email">Contact</a>
+        </div>
+        <button class="book-appointment-btn" data-doctor-id="${doctor.id}" data-appointment-url="${doctor.bookAppointmentUrl || ''}">
+          Book Appointment
+        </button>
+      </div>
     </div>
   `;
   
