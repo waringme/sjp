@@ -4,7 +4,8 @@ import { isAuthorEnvironment } from '../../scripts/scripts.js';
 import { getHostname } from '../../scripts/utils.js';
 
 // Sample doctor data - in production, this would come from your data source
-const GRAPHQL_DOCTORS_BY_FOLDER_QUERY = '/graphql/execute.json/ref-demo-eds/GetDoctorsFromFolder';
+//const GRAPHQL_DOCTORS_BY_FOLDER_QUERY = '/graphql/execute.json/ref-demo-eds/GetDoctorsFromFolder';
+const GRAPHQL_DOCTORS_BY_FOLDER_QUERY = '/graphql/execute.json/sjp/GetDoctorsFromFolder';
 
  const CONFIG = {
     WRAPPER_SERVICE_URL: 'https://3635370-refdemoapigateway-stage.adobeioruntime.net/api/v1/web/ref-demo-api-gateway/fetch-cf'
@@ -472,12 +473,13 @@ async function fetchFromContentFragmentFolder(folderPath) {
     console.log('payload.data:', payload?.data);
     console.log('Available keys in payload.data:', payload?.data ? Object.keys(payload.data) : 'no data');
     
+    const items = payload?.data?.doctorProfile_sjp_List?.items || [];
     // Try different possible response structures
-    let items = payload?.data?.adviserProfileList?.items || 
-                payload?.data?.doctorProfile_healthcare_List?.items ||
-                payload?.adviserProfileList?.items ||
-                payload?.items ||
-                [];
+ //   let items = payload?.data?.adviserProfileList?.items || 
+   //             payload?.data?.doctorProfile_healthcare_List?.items ||
+     //           payload?.adviserProfileList?.items ||
+       //         payload?.items ||
+         //       [];
     console.log('GraphQL items received:', items?.length || 0);
 
     const doctors = items.map((item) => transformGraphQLDoctorItem(item, isAuthor));
