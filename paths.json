@@ -1,22 +1,22 @@
 {
   "mappings": [
-    "/content/sjp/language-masters/en:/",
-    "/content/sjp/language-masters/en/:/en/",
-    "/content/sjp/language-masters/fr/:/fr/",
-    "/content/sjp/language-masters/fr:/fr",
-    "/content/sjp/language-masters/es/:/es/",
-    "/content/sjp/language-masters/es:/es",
-    "/content/sjp/language-masters/ja/:/ja/",
-    "/content/sjp/language-masters/ja:/ja",
-    "/content/sjp/language-masters/de/:/de/",
-    "/content/sjp/language-masters/de:/de",
-    "/content/sjp/configuration:/.helix/config.json",
-    "/content/sjp/metadata:/metadata.json",
-    "/content/sjp/redirects:/redirects.json",
-    "/content/sjp/placeholders:/placeholders.json"
+    "/content/st-james-place/language-masters/en:/",
+    "/content/st-james-place/language-masters/en/:/en/",
+    "/content/st-james-place/language-masters/fr/:/fr/",
+    "/content/st-james-place/language-masters/fr:/fr",
+    "/content/st-james-place/language-masters/es/:/es/",
+    "/content/st-james-place/language-masters/es:/es",
+    "/content/st-james-place/language-masters/ja/:/ja/",
+    "/content/st-james-place/language-masters/ja:/ja",
+    "/content/st-james-place/language-masters/de/:/de/",
+    "/content/st-james-place/language-masters/de:/de",
+    "/content/st-james-place/configuration:/.helix/config.json",
+    "/content/st-james-place/metadata:/metadata.json",
+    "/content/st-james-place/redirects:/redirects.json",
+    "/content/st-james-place/placeholders:/placeholders.json"
   ],
   "includes": [
-    "/content/sjp/",
-    "/content/dam/sjp/"
+    "/content/st-james-place/",
+    "/content/dam/st-james-place/"
   ]
 }
